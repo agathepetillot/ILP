@@ -19,12 +19,12 @@ public class GeoJson {
     public static HttpResponse<String> response;
     public static List<Polygon> NoFlyZone = new ArrayList<Polygon>();
     public static List<Point> Landmarks = new ArrayList<Point>();
+    public static final double INF = 1E14;
     
     public GeoJson()
     {
         NoFlyZone("localhost", "9898");
         Landmarks("localhost", "9898");
-        System.out.println(Landmarks);
     }
 
      public static void Landmarks(String machine_name, String web_server_port) {
@@ -121,33 +121,47 @@ public class GeoJson {
 
         Line2D line = new Line2D.Double(startPoint.longitude,startPoint.latitude,endPoint.longitude,endPoint.latitude);
         
-//        if (line_intersects(line, GeoJson.NoFlyZone))
-//        {
-//            FindNearestWaypoint();
-//            if(line_intersects())
-//            
-//        }
-//        
-//          go to closest way point (check for intersection again)(use line_intersects())
-//            GoToNextPosition(new positions);
-//        }
-//        else{
-////          go to the end point using 10 degree increments and checking whether or not these 10 degree increments intersect at any point
-//            with a polygon.
-//        }
-//
-//
-//        double distanceTo = start_LongLat.distanceTo(end_LongLat);
-//        double adjacent = endPoint.get(0) - startPoint.get(0);
-//        double hypotenuse = distanceTo;
-//
-//        while (distanceTo > LongLat.DIST_TOL) {
-//
-//            double angle = Math.acos(adjacent / hypotenuse);
-//
-//            start_LongLat.nextPosition((int) ((angle / 10) * 10));
-//
-//        }
+        if (line_intersects(line, GeoJson.NoFlyZone))
+        {
+            double min_dist = INF;
+            double dist = INF;
+            Landmark_index = 0;
+            for (int i = 0; i < Landmarks.size(); i++)
+            {
+                List<double> landmark = Landmarks.get(i).coordinates();
+                Line2D line1 = new Line2D.Double(startPoint.longitude,startPoint.latitude,landmark.get(0),landmark.get(1));
+                if(!line_intersects(line1,GeoJson.NoFlyZone))
+                {
+                    dist = startPoint.distanceTo(LongLat(landmark.get(0),landmark.get(1)));
+                    if ( dist < min_dist){
+                        min_dist = dist;
+                        Landmark_index = i;
+                    }
+                }
+            
+            
+        }
+        
+          go to closest way point (check for intersection again)(use line_intersects())
+            GoToNextPosition(new positions);
+        }
+        else{
+//          go to the end point using 10 degree increments and checking whether or not these 10 degree increments intersect at any point
+            with a polygon.
+        }
+
+
+        double distanceTo = start_LongLat.distanceTo(end_LongLat);
+        double adjacent = endPoint.get(0) - startPoint.get(0);
+        double hypotenuse = distanceTo;
+
+        while (distanceTo > LongLat.DIST_TOL) {
+
+            double angle = Math.acos(adjacent / hypotenuse);
+
+            start_LongLat.nextPosition((int) ((angle / 10) * 10));
+
+        }
     }
 
 
