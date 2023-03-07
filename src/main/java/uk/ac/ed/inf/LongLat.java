@@ -53,8 +53,6 @@ public class LongLat {
             return true;
         } else {
             return false;
-
-
         }
     }
 

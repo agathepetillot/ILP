@@ -44,12 +44,11 @@ public class Menus {
      * @param machine_name name of the machine
      * @param web_server_port where the web server is running
      */
-
     public Menus(String machine_name, String web_server_port){
 
         //Make a request so that we can get a response
         //HttpRequest assumes that it is a GET request by default
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("http://" + machine_name + ":" + web_server_port+"/menus/menus.json")).build();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("http://" + machine_name + ":"+web_server_port+"/menus/menus.json")).build();
         //Call the send method on the client created
 
         try {

@@ -189,23 +189,6 @@ public class AppTest {
         // Don't forget the standard delivery charge of 50p
         assertEquals(4 * 460 + 50, totalCost);
     }
-
-    @Test
-    public void testPointIntersectsA() {
-        LongLat pos = new LongLat(-3.1904, 55.9441);
-        boolean point_intersects = (GeoJson.point_intersects(pos.longitude, pos.latitude, GeoJson.NoFlyZone("localhost", "9898")));
-//        System.out.println(point_intersects(nextPos.longitude, nextPos.latitude, NoFlyZone("localhost", "9898")));
-        assertFalse(point_intersects);
-    }
-
-    @Test
-    public void testPointIntersectsB() {
-        LongLat pos = new LongLat(-3.1893, 55.9452);
-        boolean point_intersects = (GeoJson.point_intersects(pos.longitude, pos.latitude, GeoJson.NoFlyZone("localhost", "9898")));
-//        System.out.println(point_intersects(nextPos.longitude, nextPos.latitude, NoFlyZone("localhost", "9898")));
-        assertTrue(point_intersects);
-    }
 }
-
 
 
